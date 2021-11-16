@@ -1,0 +1,3 @@
+include ':MyAdvertisingLibrary'
+include ':app'
+rootProject.name = "COMP97109_CW2"
