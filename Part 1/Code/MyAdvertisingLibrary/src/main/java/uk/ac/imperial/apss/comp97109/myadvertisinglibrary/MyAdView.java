@@ -13,15 +13,10 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
-import com.google.android.gms.ads.identifier.AdvertisingIdClient.Info;
 
 import androidx.core.app.ActivityCompat;
 
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.common.util.concurrent.ListenableFuture;
 
 public class MyAdView {
     private static final String TAG = "CW2: MyAdView";
@@ -60,24 +55,18 @@ public class MyAdView {
 
         //GET ADVERTISING ID
 
-        MobileAds.initialize(ctx, new OnInitializationCompleteListener() {
+        AsyncTask.execute(new Runnable() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-        Thread myThreads = new Thread() {
             public void run() {
                 try {
-                    AdvertisingIdClient.Info info = AdvertisingIdClient.getAdvertisingIdInfo(ctx);
-                    Log.d("Ad ID", info.getId());
+                    AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(ctx);
+                    String adId = adInfo.getId();
+                    Log.d("Advertisement ID", adId);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        };
-
-        myThreads.start();
+        });
 
     }
 
