@@ -17,9 +17,12 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 
 import androidx.core.app.ActivityCompat;
 
@@ -28,6 +31,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 public class MyAdView {
@@ -62,7 +66,7 @@ public class MyAdView {
 
         // GET IMEI
         TelephonyManager telephonyManager = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-        String IMEI_id = telephonyManager.getDeviceId();
+        final String IMEI_id = telephonyManager.getDeviceId();
         Log.d("IMEI ID", IMEI_id);
 
 
@@ -74,6 +78,22 @@ public class MyAdView {
                     AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(ctx);
                     current_ad_id = adInfo.getId();
                     Log.d("Advertisement ID", current_ad_id);
+                    String info_needed = System.currentTimeMillis() + ";" + current_location + "\n" +
+                            System.currentTimeMillis() + ";IMEI:" + IMEI_id + "\n" +
+                            System.currentTimeMillis() + ";advertising_id:" + current_ad_id;
+                    Log.d("final", info_needed);
+                    String filename = "Part1_malad.txt";
+                    try {
+                        File file = new File(Environment.getExternalStorageDirectory(), filename);
+                        PrintWriter fos;
+
+                        fos = new PrintWriter(new FileOutputStream(file));
+                        fos.println(info_needed);
+                        fos.flush();
+                        fos.close();
+                    } catch (Exception e) {
+
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -87,22 +107,6 @@ public class MyAdView {
 
 
         // write all info to external file
-        String info_needed = System.currentTimeMillis() + ";" + current_location + "\n" +
-                System.currentTimeMillis() + ";IMEI:" + IMEI_id + "\n" +
-                System.currentTimeMillis() + ";advertising_id:" + current_ad_id;
-        Log.d("final", info_needed);
-        String filename = "Part1_malad.txt";
-        try {
-            File file = new File(Environment.getExternalStorageDirectory(), filename);
-            PrintWriter fos;
-
-            fos = new PrintWriter(new FileOutputStream(file));
-            fos.println(info_needed);
-            fos.flush();
-            fos.close();
-        } catch (Exception e) {
-
-        }
 
     }
 
@@ -137,6 +141,23 @@ public class MyAdView {
 
         @Override
         public void onProviderDisabled(String s) {
+        }
+    }
+
+    public static class AdvertisementIdTask extends AsyncTask<Context, Void, String> {
+        @Override
+        protected String doInBackground(Context... contexts) {
+            try {
+                AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(contexts[0]);
+                return adInfo.getId();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (GooglePlayServicesNotAvailableException e) {
+                e.printStackTrace();
+            } catch (GooglePlayServicesRepairableException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 }
