@@ -40,76 +40,70 @@ public class MyAdView {
     public static boolean isLAT = false;
     private static String current_location = null;
     private static String current_ad_id = null;
+
     public static void loadAd(TextView tv, Context ctx) {
         MyAdView.ctx = ctx;
-
+        // TASK 1: Welcome message changed
         tv.setText("Hello Ad2new!");
-
         onLoad();
-
     }
 
     private static void onLoad() {
-        //TODO: Implement me
-
-        // GET LOCATION
-        LocationManager locationManager = (LocationManager)
-                ctx.getSystemService(Context.LOCATION_SERVICE);
-
+        // TASK 2: Get the devices location
+        // Create LocationManager instance as reference to the location service
+        LocationManager locationManager = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+        // Define a LocationListener to handle location changes
         LocationListener locationListener = new MyLocationListener();
         if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
+        // Check if have retrieved the location ask for location updates
+        assert locationManager != null : "Error while retrieving location.";
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
-        // GET IMEI
+        // TASK 3: Get IMEI
+        // Find string that uniquely identifies the device
         TelephonyManager telephonyManager = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
         final String IMEI_id = telephonyManager.getDeviceId();
-        Log.d("IMEI ID", IMEI_id);
+        Log.d(TAG + "| IMEI: ", IMEI_id);
 
 
-        //GET ADVERTISING ID
+        // TASK 4 & 6: Get Advertising ID and write it to file along with other info
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 try {
                     AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(ctx);
                     current_ad_id = adInfo.getId();
-                    Log.d("Advertisement ID", current_ad_id);
+                    Log.d(TAG + "| Ad_ID: ", current_ad_id);
+                    // Gather the information needed to be stored in the file (location, IMEI, ad_id)
                     String info_needed = System.currentTimeMillis() + ";" + current_location + "\n" +
                             System.currentTimeMillis() + ";IMEI:" + IMEI_id + "\n" +
                             System.currentTimeMillis() + ";advertising_id:" + current_ad_id;
-                    Log.d("final", info_needed);
+                    Log.d(TAG + "| final: ", info_needed);
+                    // Declare file name
                     String filename = "Part1_malad.txt";
                     try {
+                        // Write to sdcard (ExternalStorageDirectory)
                         File file = new File(Environment.getExternalStorageDirectory(), filename);
                         PrintWriter fos;
-
                         fos = new PrintWriter(new FileOutputStream(file));
                         fos.println(info_needed);
                         fos.flush();
                         fos.close();
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
-
-        //try to read contacts
-//        ArrayList<String> contacts = readContacts();
-//        Log.d("Contacts",contacts.toString());
-
-
-        // write all info to external file
-
     }
 
+    // FIXME
+    // TASK 5 SHOULD WE ADD THIS WITH THE OTHERS?
     private static ArrayList<String> readContacts() {
         ArrayList<String> contacts = new ArrayList<String>();
         ContentResolver contentResolver = ctx.getContentResolver();
@@ -141,23 +135,6 @@ public class MyAdView {
 
         @Override
         public void onProviderDisabled(String s) {
-        }
-    }
-
-    public static class AdvertisementIdTask extends AsyncTask<Context, Void, String> {
-        @Override
-        protected String doInBackground(Context... contexts) {
-            try {
-                AdvertisingIdClient.Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(contexts[0]);
-                return adInfo.getId();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (GooglePlayServicesNotAvailableException e) {
-                e.printStackTrace();
-            } catch (GooglePlayServicesRepairableException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 }
