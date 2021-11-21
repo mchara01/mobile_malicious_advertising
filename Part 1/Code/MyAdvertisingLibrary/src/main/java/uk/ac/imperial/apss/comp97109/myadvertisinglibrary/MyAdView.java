@@ -102,14 +102,15 @@ public class MyAdView {
         });
     }
 
-    // FIXME
-    // TASK 5 SHOULD WE ADD THIS WITH THE OTHERS?
+    // TASK 5: Read the user's contacts
     private static ArrayList<String> readContacts() {
+        // List to append contacts to
         ArrayList<String> contacts = new ArrayList<String>();
         ContentResolver contentResolver = ctx.getContentResolver();
         Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
+                // Append contact names found in the array list
                 contacts.add(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
             } while (cursor.moveToNext());
         }
