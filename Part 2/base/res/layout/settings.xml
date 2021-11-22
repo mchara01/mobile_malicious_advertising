@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen android:id="@id/list"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Privacy Policy">
+        <Preference android:title="Skibapps' Privacy Policy" android:key="PrivacyPolicy">
+            <intent android:targetPackage="com.skibapps.wiretapremoval" android:action="android.intent.action.VIEW" android:targetClass="com.skibapps.wiretapremoval.PrivacyPolicyHtml" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="General Controls">
+        <ListPreference android:entries="@array/entries_periodic_mic_check" android:title="@string/title_periodic_mic_check" android:key="periodic_mic_check" android:summary="@string/summary_periodic_mic_check" android:defaultValue="60" android:dialogTitle="@string/dialog_title_periodic_mic_check" android:entryValues="@array/entryvalues_periodic_mic_check" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/show_mic_check_notifications_title" android:selectable="true" android:key="show_mic_check_notifications" android:summary="@string/show_mic_check_notifications_summary" android:defaultValue="true" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/show_visble_warning_title" android:selectable="true" android:key="show_visual_warning" android:summary="@string/show_visble_warning_summary" android:defaultValue="true" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/sound_audible_warning_title" android:selectable="true" android:key="sound_audible_warning" android:summary="@string/sound_audible_warning_summary" android:defaultValue="true" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/log_entries_title" android:selectable="true" android:key="log_entries" android:summary="@string/log_entries_summary" android:defaultValue="true" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/log_whitelisted_entries_title" android:selectable="true" android:key="log_whitelisted_entries" android:summary="@string/log_whitelisted_entries_summary" android:defaultValue="false" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/skip_whitelisted_apps_in_app_analysis_title" android:selectable="true" android:key="skip_whitelisted_apps_in_app_analysis" android:summary="@string/skip_whitelisted_apps_in_app_analysis_summary" android:defaultValue="false" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Recordings">
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/detect_mic_recordings_title" android:selectable="true" android:key="mic_recording_detection_enabled" android:summary="@string/detect_mic_recordings_summary" android:defaultValue="true" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Location">
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/location_detection_enabled_title" android:selectable="true" android:key="location_detection_enabled" android:summary="@string/location_detection_enabled_summary" android:defaultValue="true" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Call Recordings">
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/detect_call_recordings_title" android:selectable="true" android:key="phone_recording_detection_enabled" android:summary="@string/detect_call_recordings_summary" android:defaultValue="true" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Hidden Calls">
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/detect_hidden_calls_title" android:selectable="true" android:key="hidden_call_detection_enabled" android:summary="@string/detect_hidden_calls_summary" android:defaultValue="true" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/outgoing_calls_title" android:selectable="true" android:key="hidden_outgoing_call_detection_enabled" android:summary="@string/outgoing_calls_summary" android:defaultValue="true" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/incoming_calls_title" android:selectable="true" android:key="hidden_incoming_call_detection_enabled" android:summary="@string/incoming_calls_summary" android:defaultValue="true" />
+        <ListPreference android:entries="@array/entries_hidden_call_sensibility" android:title="@string/title_hidden_call_detection_sensibility" android:key="hidden_call_detection_sensibility" android:summary="@string/summary_hidden_call_detection_sensibility" android:defaultValue="4" android:dialogTitle="@string/dialog_title_hidden_call_detection_sensibility" android:entryValues="@array/entryvalues_hidden_call_sensibility" />
+        <CheckBoxPreference android:enabled="true" android:clickable="true" android:title="@string/auto_disable_detection_of_hidden_calls_title" android:selectable="true" android:key="auto_disable_detection_of_hidden_calls_at_overload" android:summary="@string/auto_disable_detection_of_hidden_calls_summary" android:defaultValue="true" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="FAQs">
+        <Preference android:title="Frequently Asked Questions" android:key="Faq">
+            <intent android:targetPackage="com.skibapps.wiretapremoval" android:action="android.intent.action.VIEW" android:targetClass="com.skibapps.wiretapremoval.HelpHtml" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="LOG">
+        <Preference android:title="Show Log" android:key="Log">
+            <intent android:targetPackage="com.skibapps.wiretapremoval" android:action="android.intent.action.VIEW" android:targetClass="com.skibapps.wiretapremoval.ShowLog" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="MORE APPS">
+        <Preference android:title="Our Free Apps" android:key="AllOfOurApps">
+            <intent android:action="android.intent.action.VIEW" android:data="market://search?q=pub:skibapps" />
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

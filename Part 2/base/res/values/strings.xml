@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abc_action_bar_home_description">Navigate home</string>
+    <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
+    <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
+    <string name="abc_action_bar_up_description">Navigate up</string>
+    <string name="abc_action_menu_overflow_description">More options</string>
+    <string name="abc_action_mode_done">Done</string>
+    <string name="abc_activity_chooser_view_see_all">See all</string>
+    <string name="abc_activitychooserview_choose_application">Choose an app</string>
+    <string name="abc_capital_off">OFF</string>
+    <string name="abc_capital_on">ON</string>
+    <string name="abc_font_family_body_1_material">sans-serif</string>
+    <string name="abc_font_family_body_2_material">sans-serif-medium</string>
+    <string name="abc_font_family_button_material">sans-serif-medium</string>
+    <string name="abc_font_family_caption_material">sans-serif</string>
+    <string name="abc_font_family_display_1_material">sans-serif</string>
+    <string name="abc_font_family_display_2_material">sans-serif</string>
+    <string name="abc_font_family_display_3_material">sans-serif</string>
+    <string name="abc_font_family_display_4_material">sans-serif-light</string>
+    <string name="abc_font_family_headline_material">sans-serif</string>
+    <string name="abc_font_family_menu_material">sans-serif</string>
+    <string name="abc_font_family_subhead_material">sans-serif</string>
+    <string name="abc_font_family_title_material">sans-serif-medium</string>
+    <string name="abc_search_hint">Search…</string>
+    <string name="abc_searchview_description_clear">Clear query</string>
+    <string name="abc_searchview_description_query">Search query</string>
+    <string name="abc_searchview_description_search">Search</string>
+    <string name="abc_searchview_description_submit">Submit query</string>
+    <string name="abc_searchview_description_voice">Voice search</string>
+    <string name="abc_shareactionprovider_share_with">Share with</string>
+    <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
+    <string name="abc_toolbar_collapse_description">Collapse</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">WireTap Removal</string>
+    <string name="app_name_long_name">WireTap and Spy Removal</string>
+    <string name="app_name_short_name">WireTap Removal</string>
+    <string name="auto_disable_detection_of_hidden_calls_summary">"Disable Detection of Hidden Calls
+At System Overload"</string>
+    <string name="auto_disable_detection_of_hidden_calls_title">Auto Disable Detection</string>
+    <string name="banner_ad_unit_id">ca-app-pub-7838979744136675/4944514948</string>
+    <string name="block_camera">ENABLE</string>
+    <string name="button_disable">ENABLE</string>
+    <string name="button_enable">ENABLE</string>
+    <string name="button_settings">SETTINGS</string>
+    <string name="button_whitelist">WHITELIST</string>
+    <string name="call_recording_audible_warning_summary">Sound an Alert at Event</string>
+    <string name="call_recording_audible_warning_title">Audible Warning</string>
+    <string name="call_recording_log_entry_summary">Log Events</string>
+    <string name="call_recording_log_entry_title">Log</string>
+    <string name="call_recording_visble_warning_summary">Show Notification at Event</string>
+    <string name="call_recording_visble_warning_title">Visible Warning</string>
+    <string name="clear_log">CLEAR LOG</string>
+    <string name="common_google_play_services_unknown_issue">%1$s is having trouble with Google Play services. Please try again.</string>
+    <string name="detect_call_recordings_summary">Register if a Call is being Recorded</string>
+    <string name="detect_call_recordings_title">Detect Call Recordings</string>
+    <string name="detect_hidden_calls_summary">Register if a Hidden Call is Detected</string>
+    <string name="detect_hidden_calls_title">Detect Hidden Calls</string>
+    <string name="detect_mic_recordings_summary">"Register if Audio or Video
+is being Recorded"</string>
+    <string name="detect_mic_recordings_title">Detect Recordings</string>
+    <string name="detect_stealth_sms_summary">Register if a Stealth SMS is Received</string>
+    <string name="detect_stealth_sms_title">Detect Stealth SMS (Type 0)</string>
+    <string name="dialog_title_hidden_call_detection_sensibility">"Hidden Calls
+Detection Sensibility"</string>
+    <string name="dialog_title_periodic_mic_check">Check Recording</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="help_text_title">WireTap Removal FAQs</string>
+    <string name="hidden_calls_audible_warning_summary">Sound an Alert at Event</string>
+    <string name="hidden_calls_audible_warning_title">Audible Warning</string>
+    <string name="hidden_calls_log_entry_summary">Log Events</string>
+    <string name="hidden_calls_log_entry_title">Log</string>
+    <string name="hidden_calls_visble_warning_summary">Show Notification at Event</string>
+    <string name="hidden_calls_visble_warning_title">Visble Warning</string>
+    <string name="incoming_calls_summary">Register Incoming Hidden Calls</string>
+    <string name="incoming_calls_title">Incoming Calls</string>
+    <string name="left_whitelist_button">UP</string>
+    <string name="location_detection_enabled_summary">"Register if Someone Reads your
+GPS or Network Location"</string>
+    <string name="location_detection_enabled_title">Detect Reading of Location</string>
+    <string name="log_entries_summary">Log Events</string>
+    <string name="log_entries_title">Log</string>
+    <string name="log_whitelisted_entries_summary">Also Log Events for Whitelisted Apps</string>
+    <string name="log_whitelisted_entries_title">Log Whitelisted Apps</string>
+    <string name="main_text_disabled">"There may be SPY Apps on your Device intended to WireTap your Phone.
+ These Apps can Read your Location, Make Audio, Video or Call Recordings,
+ and/or set up Hidden Phone Calls to or from your Phone."</string>
+    <string name="main_text_enabled">"Now any attempt to WireTap your Phone will be Detected, Shown and Logged.
+ You will be Alerted when someone tries to Spy on you
+ by Reading your Location, Making Voice or Video Recordings
+ or by Setting up Hidden Phone Calls.
+ See Configuration and Log on the Settings Page."</string>
+    <string name="main_text_unknown">"Now any attempt to WireTap your Phone will be Detected, Shown and Logged.
+ You will be Alerted when someone tries to Spy on your Voice Calls or through your Microphone.
+ See Configuration and Log on the Settings Page."</string>
+    <string name="main_text_unknown_alarm_error">"INTERNAL ERROR!
+
+ Please press IGNORE to continue."</string>
+    <string name="mic_recording_audible_warning_summary">Sound an Alert at Event</string>
+    <string name="mic_recording_audible_warning_title">Audible Warning</string>
+    <string name="mic_recording_log_entry_summary">Log Events</string>
+    <string name="mic_recording_log_entry_title">Log</string>
+    <string name="mic_recording_visble_warning_summary">Show Notification at Event</string>
+    <string name="mic_recording_visble_warning_title">Visible Warning</string>
+    <string name="middle_whitelist_button">DOWN</string>
+    <string name="outgoing_calls_summary">Register Outgoing Hidden Calls</string>
+    <string name="outgoing_calls_title">Outgoing Calls</string>
+    <string name="preference_show_notification_icon">Notifications</string>
+    <string name="privacy_policy_text_title">"Skibapps' Privacy Policy"</string>
+    <string name="right_whitelist_button">DELETE</string>
+    <string name="s1">Save image</string>
+    <string name="s2">Allow Ad to store image in Picture gallery?</string>
+    <string name="s3">Accept</string>
+    <string name="s4">Decline</string>
+    <string name="s5">Create calendar event</string>
+    <string name="s6">Allow Ad to create a calendar event?</string>
+    <string name="s7">Test Ad</string>
+    <string name="search_menu_title">Search</string>
+    <string name="settings">SETTINGS</string>
+    <string name="settings_title">WireTap Removal Settings</string>
+    <string name="show_log_text">Log</string>
+    <string name="show_log_title">WireTap Removal Log</string>
+    <string name="show_mic_check_notifications_summary">"Show Text Each Time
+Recording and Location is Checked"</string>
+    <string name="show_mic_check_notifications_title">Show Notifications</string>
+    <string name="show_notification_icon_summary">Show Notification Icon</string>
+    <string name="show_notification_icon_title">Show Notification</string>
+    <string name="show_visble_warning_summary">Show Full Screen Warning at Events</string>
+    <string name="show_visble_warning_title">Visual Warning</string>
+    <string name="show_whitelist_text">"
+Whitelist"</string>
+    <string name="show_whitelist_title">Simple Whitelist Cleaner</string>
+    <string name="skip_whitelisted_apps_in_app_analysis_summary">(Please Read in FAQs Before Enabling)</string>
+    <string name="skip_whitelisted_apps_in_app_analysis_title">Skip Whitelisted Apps in Analyses</string>
+    <string name="sound_audible_warning_summary">Sound an Alert at Events</string>
+    <string name="sound_audible_warning_title">Audible Warning</string>
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="stealth_sms_audible_warning_summary">Sound an Alert at Event</string>
+    <string name="stealth_sms_audible_warning_title">Audible Warning</string>
+    <string name="stealth_sms_log_entry_summary">Log Events</string>
+    <string name="stealth_sms_log_entry_title">Log</string>
+    <string name="stealth_sms_visble_warning_summary">Show Notification at Event</string>
+    <string name="stealth_sms_visble_warning_title">Visible Warning</string>
+    <string name="summary_hidden_call_detection_sensibility">"Select Detection Sensibility.
+(A High Sensibility may give False Detections)"</string>
+    <string name="summary_periodic_mic_check">"Select Check Interval.
+(A Short Period may
+Increase Battery Consumption)"</string>
+    <string name="text_3">TExT 3</string>
+    <string name="title_hidden_call_detection_sensibility">Hidden Call Detection Sensibility</string>
+    <string name="title_periodic_mic_check">Periodic Check of Recordings, etc.</string>
+    <string name="unblock_camera">DISABLE</string>
+    <string name="warning">WARNING!</string>
+    <string name="wiretap_removal_is_disabled">WireTap Removal is DISABLED</string>
+    <string name="wiretap_removal_is_enabled">WireTap Removal is ENABLED</string>
+</resources>
