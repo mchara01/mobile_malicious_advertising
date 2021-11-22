@@ -1,0 +1,9 @@
+1. decompile: java -jar apktool_2.3.4.jar d base.apk
+2. inject the Log.d commang in smali file with:
+const-string p0, "Hello Malvertising2!"
+invoke-static {p0, p0}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+3. recompile: java -jar apktool_2.3.4.jar b base
+4. Sign the new apk with:
+keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-alias
+zipalign -v -p 4 my-app-unsigned.apk my-app-unsigned-aligned.apk
+java -jar /usr/lib/android-sdk/build-tools/debian/apksigner.jar sign --ks my-release-key.jks --out my-app-release.apk my-app-unsigned-aligned.apk
