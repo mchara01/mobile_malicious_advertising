@@ -152,10 +152,6 @@
 
     invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
 
-    const-string p0, "Hello Malvertising!"
-
-    invoke-static {p0, p0}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
-    
     invoke-static {}, Lcom/google/android/gms/internal/ads/zzkb;->zzig()Lcom/google/android/gms/internal/ads/zzjr;
 
     move-result-object v0
@@ -361,9 +357,7 @@
     .locals 2
 
     invoke-super {p0}, Landroid/app/Activity;->onStart()V
-    const-string p0, "Hello Malvertising!"
 
-    invoke-static {p0, p0}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
     :try_start_0
     iget-object v0, p0, Lcom/google/android/gms/ads/AdActivity;->zzuj:Lcom/google/android/gms/internal/ads/zzaap;
 

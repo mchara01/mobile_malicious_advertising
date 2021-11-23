@@ -123,10 +123,6 @@
 
     invoke-super {p0, p1}, Lcom/google/android/gms/ads/BaseAdView;->loadAd(Lcom/google/android/gms/ads/AdRequest;)V
 
-    const-string p0, "Hello Malvertising2!"
-
-    invoke-static {p0, p0}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
-
     return-void
 .end method
 
