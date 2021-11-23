@@ -12,7 +12,7 @@ NC='\033[0m' # No Color
 
 # De-compile base.apk
 echo -e "${RED}Decompiling $APKFILE...${NC}"
-java -jar apktool_2.3.4.jar -f d $APKFILE
+java -jar apktool_2.3.4.jar -f d $APKFILE > /dev/null
 
 # Enter the decompiled directory and replace the package name in the first line of the manifest file
 echo -e "${RED}Modifying AndroidManifest.xml...${NC}"
@@ -20,15 +20,15 @@ sed -i '' -e '1s/com.skibapps.wiretapremoval/com.smalirepackaged.wiretapremoval/
 
 # Re-compile app with the new package name
 echo -e "${RED}Recompiling modified application...${NC}"
-java -jar apktool_2.3.4.jar b $NEWAPKDIR
+java -jar apktool_2.3.4.jar b $NEWAPKDIR > /dev/null
 
 # Generate new public/private key pair and store it in my-release-key.jks
 # keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-alias
 
 # Ensure that all uncompressed files in the archive are aligned relative to the start of the file
 echo -e "${RED}Aligning file...${NC}"
-$ZIPALIGN -v -p 4 base/dist/base.apk base/dist/base_aligned.apk
+$ZIPALIGN -v -p 4 base/dist/base.apk base/dist/base_aligned.apk > /dev/null
 
 # Sign the repackaged app with the .jks produced earlier with a password given before execution
 echo -e "${RED}Signing repackaged application...${NC}"
-$APKSIGNERDIR sign  --ks my-release-key.jks --out base/dist/base_release.apk base/dist/base_aligned.apk <<< salim@
+$APKSIGNERDIR sign  --ks my-release-key.jks --out base/dist/base_release.apk base/dist/base_aligned.apk <<< salim@ > /dev/null
