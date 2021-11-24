@@ -5,7 +5,7 @@ In this assignment, we explored what a malicious advertising network can do to e
 Here we investigate the access to sensitive information using the ad library. The MyAdView.java is the view that gets loaded into the host app. Part 1 involves getting the sensitive information and identifiers.
 
 The Part1_malad.txt can be accessed using `adb pull /storage/sdcard/Part1_malad.txt`
-The picture captured in part 1 is saved automatically and can be retrieved via: <\br>
+The picture captured in part 1 is saved automatically and can be retrieved via: <br>
 `adb pull /storage/sdcard/Android/data/uk.ac.imperial.apss.comp97109.cw2/files/Pictures/JPEG_<timestamp>.jpg`
 
 ## Part 2
