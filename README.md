@@ -4,6 +4,9 @@ In this assignment you will explore what a malicious advertising network can do 
 Part 1 investigate the access to sensitive information using the ad library
 the MyAdView.java is the view that get loaded into the host app. Part 1 involve getting the sensitive information and identifiers.
 
+the part 1 malad.txt can be accessed using adb pull /storage/sdcard/Part1_malad.txt
+the picture captured in part 1 is saved automatically and can be retrieved adb pull /storage/sdcard/Android/data/uk.ac.imperial.apss.comp97109.cw2/files/Pictures/JPEG_<timestamp>.jpg
+
 #part2
 Part 2 involved reverse engineering a real world host application attached to real world library. The part involved de-compiling the package into smali code classes. then,
 by finding the location where the advertisement get loaded (AdView-> loadAd()), in the method we inject the code that fetch the sensitive data which are:
