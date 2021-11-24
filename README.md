@@ -1,5 +1,5 @@
 # Mobile malicious advertising
-In this assignment, we explored what a malicious advertising network can do to exploit the android infrastructure and learn as much as possible for a device user.
+In this assignment, we explored what a malicious advertising network can do to exploit the android infrastructure and learn as much as possible for an android device user.
 
 ## Part 1
 Here we investigate the access to sensitive information using the ad library. The MyAdView.java is the view that gets loaded into the host app. Part 1 involves getting the sensitive information and identifiers.
