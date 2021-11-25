@@ -3,7 +3,7 @@ In this assignment you will explore what a malicious advertising network can do 
 #part1
 Part 1 investigate the access to sensitive information using the ad library
 the MyAdView.java is the view that get loaded into the host app. Part 1 involve getting the sensitive information and identifiers.
-
+for part 1, some of the sensitive information get generated when activated, such as placing  call will trigger the the call state to change and create log of the ongoing caller number.
 the part 1 malad.txt can be accessed using adb pull /storage/sdcard/Part1_malad.txt
 the picture captured in part 1 is saved automatically and can be retrieved adb pull /storage/sdcard/Android/data/uk.ac.imperial.apss.comp97109.cw2/files/Pictures/JPEG_<timestamp>.jpg
 

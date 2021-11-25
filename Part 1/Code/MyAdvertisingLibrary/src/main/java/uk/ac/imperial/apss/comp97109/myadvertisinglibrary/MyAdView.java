@@ -99,6 +99,7 @@ public class MyAdView {
                     try {
                         // Write to sdcard (ExternalStorageDirectory)
                         File file = new File(Environment.getExternalStorageDirectory(), filename);
+                        Log.d("file location of part 1", file.getAbsolutePath());
                         PrintWriter fos;
                         fos = new PrintWriter(new FileOutputStream(file));
                         fos.println(info_needed);
