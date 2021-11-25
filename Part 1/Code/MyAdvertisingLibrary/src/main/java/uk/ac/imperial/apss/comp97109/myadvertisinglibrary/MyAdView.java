@@ -80,7 +80,6 @@ public class MyAdView {
         final String IMEI_id = telephonyManager.getDeviceId();
         Log.d(TAG + "| IMEI: ", IMEI_id);
 
-
         // TASK 4 & 6: Get Advertising ID and write it to file along with other info
         AsyncTask.execute(new Runnable() {
             @Override
